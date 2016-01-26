@@ -58,6 +58,9 @@ bjData<- rbind(dataProcess(bj2008), dataProcess(bj2009),
 # in all months that year
 df.year<- aggregate(Value ~ Year, data = bjData, FUN= mean)
 
+# China sets the yearly average limit of pm 2.5 as 35 µg/m³
+exceedAnnual<- df.year$Value > 35
+
 library(ggplot2)
 
 shinyServer(
@@ -67,27 +70,30 @@ shinyServer(
                   # subset the data in the year selected in ui
                   bjDataSelected<- bjData[bjData$Year == input$rYear, ]
                   
+                  # daily average limit of pm 2.5 in China is 75 µg/m³
+                  # for simplification, we use this as monthly average threshold
+                  exceedDaily<- bjDataSelected$Value > 75
+                  
                   # if annual trend radio button selected, plot the annual data
                   if(input$spanId == 1) {
-                        qplot(x = Year, y = Value, data = df.year,
-                              xlab = "Year", 
-                              ylab = "Daily Average PM 2.5 (µg/m³)",
-                              main = "Annual Trend of Daily Average PM 2.5
-                              in Beijing",
-                              geom = c("point", "line")) 
+                        ggplot(df.year, aes(Year, Value)) +
+                              geom_point(aes(colour = exceedAnnual)) +
+                              geom_line(colour = "salmon") +
+                              xlab("Year") +
+                              ylab("Daily Average PM 2.5 (µg/m³)") +
+                              ggtitle("Annual Trend of Daily Average PM 2.5 in Beijing")
                   }
                   
                   # if monthly trend radio button selected, plot the monthly
                   # data of the selected year
                   else if(input$spanId == 2) {
-                        qplot(x = Month, y = Value, 
-                              xlim = c(0,12),
-                              data = bjDataSelected,
-                              xlab = paste("Month in ", input$rYear),
-                              ylab = "Daily Average PM 2.5 (µg/m³)",
-                              main = paste("Monthly Trend of Daily Average
-                                           PM 2.5 in Beijing in ", input$rYear),
-                              geom = c("point", "line"))
+                        ggplot(bjDataSelected, aes(Month, Value)) +
+                              geom_point(aes(colour = exceedDaily)) +
+                              geom_line(colour = "salmon") +
+                              xlim(0,12) +
+                              xlab(paste("Month in ", input$rYear)) +
+                              ylab("Daily Average PM 2.5 (µg/m³)") +
+                              ggtitle(paste("Monthly Trend of Daily Average PM 2.5 in Beijing in ", input$rYear))
                         }
                   
                   })

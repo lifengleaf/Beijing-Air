@@ -2,8 +2,8 @@ name: bjpm25
 account: leaf
 server: shinyapps.io
 appId: 80205
-bundleId: 358554
+bundleId: 358586
 url: https://leaf.shinyapps.io/bjpm25/
-when: 1453765386.59502
+when: 1453769931.17652
 asMultiple: FALSE
 asStatic: FALSE
