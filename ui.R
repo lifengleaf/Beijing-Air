@@ -5,12 +5,13 @@ shinyUI(fluidPage(
       
       sidebarLayout(
             sidebarPanel(
-                  p("Air Pollution in Beijing attracts world-wide attention
-                    these years."),
-                  p("Take a look at the PM 2.5 historical data in Beijing."),
-                  p("In China, the yearly and daily average limit of PM 2.5 is
-                    35 µg/m3 and 75 µg/m3 respectively. Whether the values exceed
-                    the standards or not is colored in the plot."),
+                  p("Air Pollution in China attracts world-wide attention
+                    in recent years."),
+                  p("Take a look at the PM 2.5 historical data observed 
+                    in Beijing using the right plot."),
+                  p("China sets the annual and daily average limit of PM 2.5 as
+                    35 µg/m3 and 75 µg/m3 respectively. Whether the observations
+                    exceed these standards is colored in the plot."),
                   
                   # radio button to choose annual or monthly trend to present
                   # set the default to "Annual"
@@ -30,17 +31,40 @@ shinyUI(fluidPage(
                                               "2013" = 2013,
                                               "2014" = 2014,
                                               "2015" = 2015), 
-                               selected = NULL),
-                  p(),
-                  p(),
-                  
-                  p("Data source: U.S. Department of State Air Quality
-                    Monitoring Program"),
-                  p("Please note that these data are not fully verified or validated.")
-                  
+                               selected = NULL)
             ),
             
             # show the output plot
-            mainPanel(plotOutput("bjPlot"))
+            mainPanel(plotOutput("bjPlot"),
+                      
+                      p(),
+                      p(),
+                      
+                      tags$div(
+                            class = "header",
+                            checked = NA,
+                            tags$p("Data source: U.S. Department of State Air Quality
+                    Monitoring Program"),
+                            tags$a(href="http://www.stateair.net/web/historical/1/1.html",
+                                   "download here")
+                      ),
+                      
+                      p(),
+                      p(),
+                      
+                      tags$div(
+                            class = "header",
+                            checked = NA,
+                            tags$p("know more about the data: "),
+                            tags$a(href="http://www.stateair.net/web/assets/USDOS_AQDataFilesFactSheet.pdf",
+                                   "Data Files Fact Sheet")
+                      ),
+                      
+                      
+                      p(),
+                      p(),
+                      
+                      p("Please note that these data are not fully verified or validated.")
+            )
 )))
 
