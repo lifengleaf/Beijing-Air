@@ -55,11 +55,21 @@ shinyUI(fluidPage(
                       tags$div(
                             class = "header",
                             checked = NA,
-                            tags$p("know more about the data: "),
+                            tags$p("Know more about the data: "),
                             tags$a(href="http://www.stateair.net/web/assets/USDOS_AQDataFilesFactSheet.pdf",
-                                   "Data Files Fact Sheet")
+                                   "Data files fact sheet")
                       ),
                       
+                      p(),
+                      p(),
+                      
+                      tags$div(
+                            class = "header",
+                            checked = NA,
+                            tags$p("find the project on GitHub:"),
+                            tags$a(href="https://github.com/lifengleaf/bjpm25",
+                                   "bjpm25")
+                      ),
                       
                       p(),
                       p(),
